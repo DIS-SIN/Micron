@@ -1,3 +1,13 @@
 {
-    "bbjsonfield": "bbjsonresult"
+     "lts_appname": "micron" 
+    ,"lts_appver": "alpha" 
+    ,"lts_micronlisten": "Micron is listening in English"
+    ,"lts_splashtext": "Micron helps CSPS understand what works for our learners and what we can improve. It all starts with your feedback." 
+    ,"lts_footersplash": "Micron just wants to know what worked for you and what could use improvement - it matters to the Canadian government. " 
+    ,"lts_footermore": "Want to see how we built micron? It is small, and we got it running in a few hours. Check out our" 
+    ,"lts_loading_msg": "Loading Micron..." 
+    ,"lts_question_prompt": "Question:" 
+    ,"lts_question_btn_prompt": "Provide Feedback" 
+    ,"lts_answer_prompt": "Feedback:" 
+    ,"lts_answer_btn_prompt": "Submit Feedback" 
 }

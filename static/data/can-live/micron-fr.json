@@ -1,0 +1,13 @@
+{ 
+     "lts_appname": "micron"
+    ,"lts_appver": "alpha"
+    ,"lts_micronlisten": "Micron écoute en anglais"
+    ,"lts_splashtext": "Micron aide l'OPCS à comprendre ce qui fonctionne pour nos apprenants et ce que nous pouvons améliorer. Tout commence par vos commentaires."
+    ,"lts_footersplash": "Micron veut juste savoir ce qui a fonctionné pour vous et ce qui pourrait être amélioré - cela compte pour le gouvernement canadien. "
+    ,"lts_footermore": "Vous voulez voir comment nous avons construit le micron? Il est petit et nous l’avons lancé en quelques heures. Découvrez notre "
+    ,"lts_loading_msg": "Chargement de micron ..." 
+    ,"lts_question_prompt": "Question:" 
+    ,"lts_question_btn_prompt": "Fournir des commentaires"
+    ,"lts_answer_prompt": "Commentaire:"
+    ,"lts_answer_btn_prompt": "Envoyer un commentaire"
+}

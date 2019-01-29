@@ -15,20 +15,14 @@ def test_ui(runtype="manual-run"):
         # pass in some basic context info for the render
         context = { \
             'testname': 'ui' \
-            ,'q': [{ \
-                'qid': 'qaz1q2w3e4r5t6y7u8i9o0pnbnvsd3' \
-                ,'qt': 'Helpful Materials' \
-                ,'qb': 'What TOPICS, MATERIALS, and ACTIVITIES did you find to be the most helpful?' \
-                ,'a': '' \
-            }] \
-            ,'lts': { \
-                'app_name':'micron' \
-                ,'loading_msg': 'Loading Micron...' \
-                ,'question_prompt': 'Question:' \
-                ,'question_btn_prompt': 'Provide Feedback' \
-                ,'answer_prompt': 'Feedback:' \
-                ,'answer_btn_prompt': 'Submit Feedback' \
-            } \
+                ,'q': [{ 'qid': 'qaz1q2w3e4r5t6y7u8i9o0pnbnvsd3' \
+                    ,'qt': 'Helpful Materials' \
+                    ,'qb': 'What TOPICS, MATERIALS, and ACTIVITIES did you find to be the most helpful?' \
+                    ,'a': '' \
+                }] \
+                ,'lts': { \
+                    'pagetitle':'alpha | micron | Helping CSPS provide the best learning experiences possible.' \
+                } \
         }
         rendered = render_template('micron/micron.html', **context)
     return rendered
