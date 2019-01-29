@@ -104,3 +104,33 @@ h1 span {
     padding: 1em;
     background: #eeeeee;
 }
+
+.speech-bubble {
+    position: relative;
+    background: #a9c5f9;
+    border-radius: .4em;
+    padding: 1em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.speech-bubble:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 37px solid transparent;
+    border-top-color: #a9c5f9;
+    border-bottom: 0;
+    margin-left: -37px;
+    margin-bottom: -37px;
+}
+
+.sbgreen {
+    background: #a9f9c5;
+}
+.sbgreen:after {
+    border-top-color: #a9f9c5;
+}
