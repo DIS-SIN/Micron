@@ -1,26 +1,37 @@
 <div style="background: white;" class="container" id="suggested_queries">
-    <div class="row" class="cell-12">
-        <div class="micron_question container">
+    <div class="row cell-12">
+        <div id="micron_loading" class="container">
+            <div class="row">
+                <div class="cell-12">  
+                    <hgroup>   
+                        <div data-role="activity" data-type="simple" data-style="color"></div> 
+                        <strong>{{lts.loading_msg}}</strong>
+                    </hgroup>
+                </div>
+            </div>
+        </div>  
+        <div id="micron_question" class="container" style="display: none;">
             <div class="row">
                 <div class="cell-12 text-center">           
                     <hgroup class="speech-bubble">
-                        <h2><span id="micron_q_def">Question:</span> <span id="micron_qt">{{qt}}</span></h2>
-                        <span id="micron_qb">{{qb}}</span>
+                        <h2><span id="micron_q_def">{{lts.question_prompt}}</span> <span id="micron_qt">{{q[0].qt}}</span></h2>
+                        <span id="micron_qb">{{q[0].qb}}</span>
+                        <small id="micron_q_qid_disp">{{q[0].qid}}</small>
                     </hgroup>                
                 </div>
             </div>
             <div class="row" style="margin-top: 2em;">
                 <div class="cell-12 text-center" style="padding:1em;">
-                    <button class="button primary large rounded"><span class="mif-download"></span> <span id="micron_btn_q">Provide Feedback</span></button>
+                    <button id="answer_q" class="button primary large rounded"><span class="mif-download"></span> <span id="micron_btn_q">{{lts.question_btn_prompt}}</span></button>
                 </div>
             </div>
         </div>
-        <div class="micron_answer container">
+        <div id="micron_answer" class="container" style="display: none;">
             <div class="row">
                 <div class="cell-12 text-center">           
                     <hgroup class="speech-bubble sbgreen">
-                        <h2><span id="micron_a_def">Feedback:</span> <span id="micron_at">{{qt}}</span></h2>
-                        <em id="micron_a_qb">{{qb}}</em>
+                        <h2><span id="micron_a_def">{{lts.answer_prompt}}</span> <span id="micron_at">{{q[0].qt}}</span></h2>
+                        <em id="micron_a_qb">{{q[0].qb}}</em>
                         <textarea id="micron_a"
                             data-role="textarea"
                             data-default-value="{{a}}"
@@ -29,12 +40,14 @@
                             data-prepend="<span class='mif-leanpub'></span>"
                             data-cls-prepend="bg-light"
                             data-clear-button-icon="<span class='mif-cross fg-black'></span>"></textarea>
+                        <small id="micron_a_qid_disp">{{q[0].qid}}</small>
+                        <input type="hidden" value="{{q[0].qid}}" id="micron_a_qid" name="micron_a_qid"/>
                     </hgroup>                
                 </div>
             </div>
             <div class="row" style="margin-top: 2em;">
                 <div class="cell-12 text-center" style="padding:1em;">
-                    <button class="button success large rounded"><span class="mif-checkmark"></span> <span id="micron_btn_a">Submit Feedback</span></button>
+                    <button id="submit_q" class="button success large rounded"><span class="mif-checkmark"></span> <span id="micron_btn_a">{{lts.answer_btn_prompt}}</span></button>
                 </div>
             </div>
         </div>        
