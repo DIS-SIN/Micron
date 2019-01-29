@@ -1,27 +1,42 @@
 <div style="background: white;" class="container" id="suggested_queries">
     <div class="row" class="cell-12">
-        <div class="container">
+        <div class="micron_question container">
             <div class="row">
-                <div class="cell-md-4 cell-sm-full" style="padding:0.5em;">
-                    <h3>Lorem</h3>
-                    <ul>
-                        <li>List item</li>
-                    </ul>
+                <div class="cell-12 text-center">           
+                    <hgroup class="speech-bubble">
+                        <h2><span id="micron_q_def">Question:</span> <span id="micron_qt">{{qt}}</span></h2>
+                        <span id="micron_qb">{{qb}}</span>
+                    </hgroup>                
                 </div>
-                <div class="cell-md-4 cell-sm-full" style="padding:0.5em;">
-                    <h3>Ipsum</h3>
-                    <ul>
-                        <li>List item</li>
-                        <li>List item</li>
-                    </ul>
-                </div>                
-                <div class="cell-md-4 cell-sm-full"  style="padding:0.5em;">
-                    <h3>Dolor</h3>
-                    <p>
-                        Let's make digital one of Canada's natural resources. 
-                    </p>
+            </div>
+            <div class="row" style="margin-top: 2em;">
+                <div class="cell-12 text-center" style="padding:1em;">
+                    <button class="button primary large rounded"><span class="mif-download"></span> <span id="micron_btn_q">Provide Feedback</span></button>
                 </div>
             </div>
         </div>
+        <div class="micron_answer container">
+            <div class="row">
+                <div class="cell-12 text-center">           
+                    <hgroup class="speech-bubble sbgreen">
+                        <h2><span id="micron_a_def">Feedback:</span> <span id="micron_at">{{qt}}</span></h2>
+                        <em id="micron_a_qb">{{qb}}</em>
+                        <textarea id="micron_a"
+                            data-role="textarea"
+                            data-default-value="{{a}}"
+                            placeholder="Provide your feedback..." 
+                            data-cls-textarea="bg-white fg-black"
+                            data-prepend="<span class='mif-leanpub'></span>"
+                            data-cls-prepend="bg-light"
+                            data-clear-button-icon="<span class='mif-cross fg-black'></span>"></textarea>
+                    </hgroup>                
+                </div>
+            </div>
+            <div class="row" style="margin-top: 2em;">
+                <div class="cell-12 text-center" style="padding:1em;">
+                    <button class="button success large rounded"><span class="mif-checkmark"></span> <span id="micron_btn_a">Submit Feedback</span></button>
+                </div>
+            </div>
+        </div>        
     </div>
 </div>
