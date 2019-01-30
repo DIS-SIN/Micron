@@ -1,0 +1,33 @@
+[
+    {
+        "survey_name":"Pilote Questionnaire"
+        ,"survey_desc":"Merci d'avoir pris le temps de fournir vos commentaires à l'OPCS au cours de cette session pilote. Les commentaires des participants influeront directement sur le matériel d'apprentissage et les activités qui seront pris en compte lors des sessions de formation futures. Veuillez vous sentir libre comme - ne vous retenez pas! Nous voulons tout: le bon, le mauvais et si vous avez des solutions à suggérer, ceux-là aussi!"
+        ,"survey_q": [
+            {"qid": "idsurveypilotquestion00000000001"
+            ,"qt": "Points forts de l'apprentissage?"
+            ,"qb":"Quels sujets, matériels et activités ont le plus contribué à votre apprentissage aujourd'hui et pourquoi?"
+            ,"a": ""}
+
+            ,{"qid": "idsurveypilotquestion00000000002"
+            ,"qt": "Matériaux moins utiles?"
+            ,"qb":"Quels sujets, matériels ou activités étaient moins utiles aujourd'hui et pourquoi?"
+            ,"a": ""}
+
+            ,{"qid": "idsurveypilotquestion00000000003"
+            ,"qt": "Compétences prises en charge?"
+            ,"qb":"Quelles sont les connaissances, compétences, valeurs et attitudes dans lesquelles cette formation vous soutient le plus?"
+            ,"a": ""}
+
+            ,{"qid": "idsurveypilotquestion00000000004"
+            ,"qt": "Place à l'amélioration?"
+            ,"qb":"Que pouvons-nous faire pour nous améliorer la semaine prochaine?"
+            ,"a": ""}
+
+            ,{"qid": "idsurveypilotquestion00000000005"
+            ,"qt": "Votre voix"
+            ,"qb":"Commentaires libres supplémentaire"
+            ,"a": ""}
+        ]
+    }
+]
+

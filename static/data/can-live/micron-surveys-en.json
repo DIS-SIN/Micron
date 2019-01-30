@@ -1,0 +1,33 @@
+[
+    {
+        "survey_name":"Pilot Questionnaire"
+        ,"survey_desc":"Thank you for taking the time to provide the CSPS your comments during this pilot session.   Participant comments will directly impact what learning material and activities will be considered in future training sessions.  Please feel free to be as candid as you like – don’t hold back! We want it all: the good, the bad and if you have solutions to suggest, those too!"
+        ,"survey_q": [
+            {"qid": "idsurveypilotquestion00000000001"
+            ,"qt": "Learning Highlights?"
+            ,"qb":"What topics, material, and activities contributed most to your learning today and why?"
+            ,"a": ""}
+
+            ,{"qid": "idsurveypilotquestion00000000002"
+            ,"qt": "Less Helpful Materials?"
+            ,"qb":"What topics, material, or activities were less useful today and why?"
+            ,"a": ""}
+
+            ,{"qid": "idsurveypilotquestion00000000003"
+            ,"qt": "Supported Skills?"
+            ,"qb":"What knowledge, skills, values, and attitudes is this training supporting you most in?"
+            ,"a": ""}
+
+            ,{"qid": "idsurveypilotquestion00000000004"
+            ,"qt": "Room for Improvement?"
+            ,"qb":"What is one thing that we can do to improve for next week?"
+            ,"a": ""}
+
+            ,{"qid": "idsurveypilotquestion00000000005"
+            ,"qt": "Your Voice"
+            ,"qb":"Additional Free-form Comments"
+            ,"a": ""}
+        ]
+    }
+]
+

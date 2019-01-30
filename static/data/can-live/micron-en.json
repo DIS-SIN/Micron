@@ -10,4 +10,5 @@
     ,"lts_question_btn_prompt": "Provide Feedback" 
     ,"lts_answer_prompt": "Feedback:" 
     ,"lts_answer_btn_prompt": "Submit Feedback" 
+    ,"lts_thank_you":"Thank You!"
 }
