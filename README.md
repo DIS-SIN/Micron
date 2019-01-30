@@ -27,4 +27,4 @@ localhost:5000/
 
 # See our Charter
 
-[Project charter](https://github.com/DIS-SIN/Micron/CHARTER.md)
+[Project charter](CHARTER.md)
