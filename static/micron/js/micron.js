@@ -1,91 +1,223 @@
-$(function() {
-    var synth = window.speechSynthesis;
-    var pitchValue = 1;
-    var rateValue = 1.3; // cross browser note, this isn't consistent across them. This might be too fast, consider user settable
+$(function() { 
+/*jq*/ 
+var micron = {
 
-    var speak_back = function(inputTxt){
-        try {
-            if (synth.speaking) {
-                console.error('speechSynthesis.speaking');
-                return;
-            }
-            if (inputTxt !== '') {
-                var utterThis = new SpeechSynthesisUtterance(inputTxt);
-                utterThis.pitch = pitchValue;
-                utterThis.rate = rateValue;
-                synth.speak(utterThis);
-            }
-        } catch(error) {
-            // do nothing, not all microns squeak
+    debug_mode: false,
+    survey_index: 0,
+    question_index: 0,
+    recognition_lang: "en-US",
+    recognition_lang_en: "en-US",
+    recognition_lang_fr: "fr-CA",
+    lang_terms: {},
+    lang_terms_file: "",
+    lang_terms_en: "/static/data/can-live/micron-en.json",
+    lang_terms_fr: "/static/data/can-live/micron-fr.json",
+    surveys: [],
+    survey_file: "",
+    surveys_en: "/static/data/can-live/micron-surveys-en.json",
+    surveys_fr: "/static/data/can-live/micron-surveys-fr.json",
+
+    start_load_chain: function() {
+        if(micron.debug_mode == true) { console.log("fxn: start_load_chain"); }
+        micron.set_init_recog();
+        micron.getlang_json();
+    },
+    getlang_json: function() {
+        if(micron.debug_mode == true) { console.log("fxn: getlang_json"); }
+        var jsonload = micron.lang_terms_file;
+        $.getJSON(jsonload, function(json) {
+            //alert(JSON.stringify(json));
+            micron.lang_terms = json;
+            if(micron.debug_mode == true) { console.log("LANG FILE LOADED"); }
+            //console.log(json);
+            micron.getsurvey_json();
+        });
+    },
+    getsurvey_json: function() {
+        if(micron.debug_mode == true) { console.log("fxn: getsurvey_json"); }
+        var jsonload = micron.survey_file;
+        $.getJSON(jsonload, function(json) {
+            micron.surveys = json;
+            if(micron.debug_mode == true) { console.log("SURVEYS FILE LOADED"); }
+            //console.log(json);
+            micron.post_json_load();
+        });        
+    },
+    post_json_load: function() {
+        if(micron.debug_mode == true) { console.log("fxn: post_json_load"); }
+        micron.init_button_ctrl();
+        micron.languify();
+        micron.load_survey();
+        micron.ask_q();
+    },
+    languify_term: function(target, langterm) {
+        $("#" + target).text(langterm);
+        if(micron.debug_mode == true) { 
+            console.log("fxn: languify_term");
+            console.log("" + target + " " + langterm);
         }
-    };
-    
-    var micron_speak = function() {
-        if($('#micron_spoken').length) { 
-            speak_back( $('#micron_spoken').text() );
+    },
+    languify: function() {
+
+        if(micron.debug_mode == true) { console.log("fxn: languify"); }
+        var lts = [
+            "lts_appname", "lts_appver", 
+            "lts_micronlisten", "lts_splashtext", "lts_footersplash", 
+            "lts_footermore", "lts_loading_msg", "lts_question_prompt", 
+            "lts_question_btn_prompt", "lts_answer_prompt", "lts_answer_btn_prompt",
+            "lts_thank_you"
+        ];
+        if(micron.debug_mode == true) { 
+            console.log("LANG");
+            console.log(micron.lang_terms); // this will show the info it in firebug console
+        }
+        for(var i = 0; i < lts.length; i++) {
+            micron.languify_term(lts[i], micron.lang_terms[lts[i]]);
+        }
+
+        var sels = ["survey", "survey_desc", "survey_q"];
+        //in survey_q:
+        var qels = ["qid", "qt", "qb", "a"];
+                
+        if(micron.debug_mode == true) { 
+            console.log("SURVEYS");
+            console.log(micron.surveys); // this will show the info it in firebug console
+        }
+        var survey = micron.surveys[micron.survey_index]; // only one for now, 
+        var sname = survey['survey_name'];
+        var sdesc = survey['survey_desc'];
+        var questions = survey['survey_q'];
+
+        $("#survey_title").text( sname );
+        $("#survey_desc").text( sdesc );
+        
+        //micron.load_survey();    
+    },
+    load_survey: function() {
+        if(micron.debug_mode == true) { console.log("fxn: load_survey"); }
+        //micron.ask_q();
+    },
+    answer_q: function() {
+        if(micron.debug_mode == true) { console.log("fxn: answer_q"); }
+        micron.qs_toggle(); 
+        $("#micron_answer").show();
+    },
+    ask_q: function() {
+        if(micron.debug_mode == true) { console.log("fxn: ask_q"); }
+        if(micron.surveys[micron.survey_index]['survey_q'].length > micron.question_index) {
+            micron.qs_toggle(); 
+            micron.load_question();
+            $("#micron_question").show();
         } else {
-            speak_back( "micron ready!" );
+            if(micron.debug_mode == true) { console.log("MAX"); }
+            micron.thanks();
         }
-    };
+    },
+    thanks: function() {
+        if(micron.debug_mode == true) { console.log("fxn: thanks"); }
+        micron.qs_toggle(); 
+        $("#micron_thanks").show();
+        $("#micron_answer").hide();
+    },
+    answer_and_get_next_q: function() { 
+        if(micron.debug_mode == true) { console.log("fxn: answer_and_get_next_q"); }
 
-    var micron_dont_speak = function() { // no doubt: i know what you're thinking, I don't need your reasons
-        synth.cancel();
-    };
-    micron_speak();
+        micron_answer_text = $("#micron_a").val();
+        micron_answer_qid = $("#micron_qid").val();
 
-    var clear_text = function() {
-        $("#transcript").val('');
-        $("#micron_console").html('');
-        $("#micron_return").html('');
-        $("#q_asked").html('micron Ready!');
-    };
+        var submission_q = [{ 
+            'qid': micron_answer_qid
+            ,'a': micron_answer_text
+        }];
+        //var str_q = JSON.stringify(submission_q, null, 2);
+        var str_q = submission_q;
+        //
+        $.post( "/feedback", str_q)
+        .done(function( data ) {
+            if(micron.debug_mode == true) { console.log("imma submit! " + JSON.stringify(str_q)); }
+            // do end result from POST
+        });
 
-    var send_speech_text = function() {
-        document.getElementById('micronfrm').submit();
-    };
-
-    var recognition_lang = "en-US";
-    var recognition_lang_tlxd = "enabled";
-    var set_recog_notlx = function() {
-        recognition_lang_tlxd = "disabled";
-        $("#recognition_lang_tlxd").val(recognition_lang_tlxd);
-        var rl = $("#recognition_language").val();
-        if(recognition_lang == "en-US") {
-            rl = "micron is listening in English: " + ($("#recognition_language").val()) + " | " + "Auto-translate: " + "<span class='mif-blocked'></span>";
+        micron.question_index++;
+        
+        micron.ask_q();
+    },
+    load_question: function() {
+        
+        if(micron.debug_mode == true) { 
+            console.log("fxn: load_question [s: " + micron.survey_index + " q: " + micron.question_index +"]");
         }
-        if(recognition_lang == "fr-CA"){
-            rl = "micron écoute Français: " + ($("#recognition_language").val()) + " | " + "Traduire automatiquement: " + "<span class='mif-blocked'></span>";
-        }
-        $("#micron_listening_for").html( rl + "<br><small>[Note: This is a note]</small>");
-    };
+        var survey = micron.surveys[micron.survey_index]; // only one for now, 
 
-    var set_recog_yestlx = function() {
-        recognition_lang_tlxd = "enabled";
-        $("#recognition_lang_tlxd").val(recognition_lang_tlxd);
-        var rl = $("#recognition_language").val();
-        if(recognition_lang == "en-US") {
-            rl = "micron is listening in English: " + ($("#recognition_language").val()) + " | " + "Auto-translate: " + "<span class='mif-checkmark'></span>";
+        var sname = survey['survey_name'];
+        var sdesc = survey['survey_desc'];
+        var questions = survey['survey_q'];
+
+
+        $("#survey_title").text( sname );
+        $("#survey_desc").text( sdesc );
+
+        $("#micron_at").text( questions[micron.question_index].qt );
+        $("#micron_qt").text( questions[micron.question_index].qt );
+
+        $("#micron_qb").text( questions[micron.question_index].qb );
+        $("#micron_a_qb").text( questions[micron.question_index].qb );
+
+        $("#micron_q_qid_disp").text( questions[micron.question_index].qid );
+
+        $("#micron_qid").val( questions[micron.question_index].qid );
+        $("#micron_a").val( ""/*questions[micron.question_index].a */);        
+        
+    },
+    init_button_ctrl: function() {
+        if(micron.debug_mode == true) { console.log("fxn: init_button_ctrl"); }
+        $("#answer_q").off("click").on("click", micron.answer_q );
+        $("#submit_q").off("click").on("click", micron.answer_and_get_next_q );
+     
+        $("#speech_icon_en").off("click").on("click", micron.set_recog_en);
+        $("#speech_icon_fr").off("click").on("click", micron.set_recog_fr);
+     
+        $("#speech_icon").off("click").on("click", micron.recognize_speech);
+    },
+    qs_toggle: function() {
+        if(micron.debug_mode == true) { console.log("fxn: qs_toggle"); }
+        $("#micron_thanks").hide();
+        $("#micron_loading").hide();
+        $("#micron_question").hide();
+        $("#micron_answer").hide();
+    },
+    set_init_recog: function() {
+        if(micron.debug_mode == true) { 
+            console.log("fxn: set_init_recog");
+            console.log("Recognize");
         }
-        if(recognition_lang == "fr-CA"){
-            rl = "micron écoute Français: " + ($("#recognition_language").val()) + " | " + "Traduire automatiquement: " + "<span class='mif-checkmark'></span>";
+        if( micron.recognition_lang == micron.recognition_lang_en) {
+            micron.lang_terms_file = micron.lang_terms_en;
+            micron.survey_file = micron.surveys_en;
+        } else if( micron.recognition_lang == micron.recognition_lang_fr) {
+            micron.lang_terms_file = micron.lang_terms_fr;
+            micron.survey_file = micron.surveys_fr;
+        } else {
+            micron.lang_terms_file = micron.lang_terms_en;
+            micron.survey_file = micron.surveys_en;            
         }
-        $("#micron_listening_for").html( rl  + "<br><small>[Note: This is a note]</small>");
-    };
-    var set_recog_en = function() {
-        recognition_lang = "en-US";
-        recognition_lang_tlxd = "enabled";
-        $("#recognition_lang_tlxd").val(recognition_lang);
-        $("#recognition_language").val(recognition_lang);
-        $("#micron_listening_for").html( "micron is listening in English: " + ($("#recognition_language").val()) +  " | " + "Auto-translate: " +"<span class='mif-checkmark'></span>"  + "<br><small>[Note: This is a note]</small>");
-    };
-    var set_recog_fr = function() {
-        recognition_lang = "fr-CA";
-        recognition_lang_tlxd = "enabled";
-        $("#recognition_lang_tlxd").val(recognition_lang);
-        $("#recognition_language").val(recognition_lang);
-        $("#micron_listening_for").html( "micron écoute Français: " + ($("#recognition_language").val()) +  " | " + "Traduire automatiquement: " +"<span class='mif-checkmark'></span>"  + "<br><small>[Note: This is a note]</small>");
-    };
-    var recognize_speech = function() {
+    },    
+    set_recog_en: function() {
+        if(micron.debug_mode == true) { console.log("fxn: set_recog_en"); }
+        micron.recognition_lang = micron.recognition_lang_en;
+        $("#recognition_language").val(micron.recognition_lang);
+        $("#micron_listening_for").html( "micron listening in English: " +  $("#recognition_language").val() );
+        micron.init_gui();
+    },
+    set_recog_fr: function() {
+        if(micron.debug_mode == true) { console.log("fxn: set_recog_fr"); }
+        micron.recognition_lang = micron.recognition_lang_fr;
+        $("#recognition_language").val(micron.recognition_lang);
+        $("#micron_listening_for").html( "micron écoute Français: " + $("#recognition_language").val() );
+        micron.init_gui();
+    },
+    recognize_speech: function() {
+        if(micron.debug_mode == true) { console.log("fxn: recognize_speech"); }
         if (window.hasOwnProperty('webkitSpeechRecognition')) {
             var recognition = new webkitSpeechRecognition();
 
@@ -107,46 +239,20 @@ $(function() {
         } else {
             $("#result_set").html("<div class='remark alert'><p><strong>micron is sorry...</strong> This page uses experimental voice recognition APIs.</p><p>It appears this browser doesnt support speech recognition. You might have more luck with <a href='https://www.google.com/chrome'>Chrome</a> or <a href='https://www.mozilla.org/firefox'>Firefox</a></p></div>");
         }
-    };
+    },
+    init_gui: function() {
+        if(micron.debug_mode == true) { console.log("fxn: initgui"); }
+        micron.start_load_chain();
+    },
+    initmicron: function() {
+        if(micron.debug_mode == true) { console.log("fxn: initmicron"); }
+        micron.survey_index = 0;
+        micron.question_index = 0;
+        micron.init_gui();
+    }
+};
 
-    var micron_help_box = function() {
-        $("#micron_help").show();
-        help_guide_toggle_gi();
-    };
-    var micron_help_box_dismiss = function() {
-        $("#micron_help").hide();
-    };
-
-    var micron_console_display = function() {
-        $("#micron_console").toggle();
-    };
-    
-    var help_guide_toggle = function(panel) {
-        $(".help_guide").hide();
-        $("#"+panel).toggle();
-    };
-    var help_guide_toggle_gi = function(panel) { help_guide_toggle('help_guide_gi'); }
-    $("#b_help_guide_gi").on("click", help_guide_toggle_gi );
-    var help_guide_toggle_sw = function(panel) { help_guide_toggle('help_guide_sw'); }
-    $("#b_help_guide_sw").on("click", help_guide_toggle_sw );
-    var help_guide_toggle_ex = function(panel) { help_guide_toggle('help_guide_ex'); }
-    $("#b_help_guide_ex").on("click", help_guide_toggle_ex );
-    var help_guide_toggle_lm = function(panel) { help_guide_toggle('help_guide_lm'); }
-    $("#b_help_guide_lm").on("click", help_guide_toggle_lm );
-
-    $("#speech_icon_en").on("click", set_recog_en);
-    $("#speech_icon_fr").on("click", set_recog_fr);
-    $("#speech_icon_no_tlx").on("click", set_recog_notlx);
-    $("#speech_icon_yes_tlx").on("click", set_recog_yestlx);
-    $("#micron_help_open").on("click", micron_help_box);
-    $("#micron_help_dismiss").on("click", micron_help_box_dismiss );
-
-    $("#speech_icon").on("click", recognize_speech);
-    $("#send_text").on("click", send_speech_text);
-    $("#clear_text").on("click", clear_text);
-    $("#talk_back").on("click", micron_speak);
-    $("#dont_talk_back").on("click", micron_dont_speak);
-    $("#toggle_micron_console").on("click", micron_console_display)
-});
+micron.initmicron(); 
+/*endjq*/ });
 
 

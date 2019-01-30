@@ -1,0 +1,72 @@
+<div style="background: white;" class="container" id="suggested_queries">
+    <div class="row cell-12">
+        <div id="micron_loading" class="container">
+            <div class="row">
+                <div class="cell-12">  
+                    <hgroup>   
+                        <div data-role="activity" data-type="simple" data-style="color"></div> 
+                        <strong><span id="lts_loading_msg"></span></strong>
+                    </hgroup>
+                </div>
+            </div>
+        </div>  
+        <div id="micron_thanks" class="container" style="display: none;">
+            <div class="row">
+                <div class="cell-12 text-center">           
+                    <hgroup class="speech-bubble">
+                        <h2>
+                            <span id="lts_thank_you"></span>                        
+                        </h2>
+                    </hgroup>                
+                </div>
+            </div>
+        </div>
+        <div id="micron_question" class="container" style="display: none;">
+            <div class="row">
+                <div class="cell-12 text-center">           
+                    <hgroup class="speech-bubble">
+                        <h2>
+                            <span id="micron_q_def"><span id="lts_question_prompt"></span></span> 
+                            <span id="micron_qt"></span>
+                        </h2>
+                        <span id="micron_qb"></span>
+                    </hgroup>                
+                </div>
+            </div>
+            <div class="row" style="margin-top: 2em;">
+                <div class="cell-12 text-center" style="padding:1em;">
+                    <button id="answer_q" class="button primary large rounded"><span class="mif-download"></span> 
+                    <span id="micron_btn_q"><span id="lts_question_btn_prompt"></span></span></button>
+                </div>
+            </div>
+        </div>
+        <div id="micron_answer" class="container" style="display: none;">
+            <div class="row">
+                <div class="cell-12 text-center">           
+                    <hgroup class="speech-bubble sbgreen">
+                        <h2>
+                            <span id="micron_a_def"><span id="lts_answer_prompt"></span></span> 
+                            <span id="micron_at"></span>
+                        </h2>
+                        <em id="micron_a_qb"></em>
+                        <textarea id="micron_a"
+                            data-role="textarea"
+                            data-default-value=""
+                            placeholder="..." 
+                            data-cls-textarea="bg-white fg-black"
+                            data-prepend="<span class='mif-leanpub'></span>"
+                            data-cls-prepend="bg-light"
+                            data-clear-button-icon="<span class='mif-cross fg-black'></span>"></textarea>
+                        <input type="hidden" value="" id="micron_qid" name="micron_qid"/>
+                        <input type="hidden" id="recognition_language" name="recognition_language" value="en-US" />
+                    </hgroup>                
+                </div>
+            </div>
+            <div class="row" style="margin-top: 2em;">
+                <div class="cell-12 text-center" style="padding:1em;">
+                    <button id="submit_q" class="button success large rounded"><span class="mif-checkmark"></span> <span id="micron_btn_a"><span id="lts_answer_btn_prompt"></span></span></button>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>
