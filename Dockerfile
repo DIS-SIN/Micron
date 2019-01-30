@@ -11,10 +11,10 @@ COPY . /app
 RUN pip install -r requirements.txt
 
 # Make port 80 available to the world outside this container
-EXPOSE 5050
+EXPOSE 5051
 
 # Define environment variable
-ENV NAME basicbits
+ENV NAME micron
 
 # UNCOMMENT WHEN APPLICATION IS READY
 # Run app.py when the container launches
@@ -44,13 +44,13 @@ CMD ["python", "test_ui.py"]
 # -- IN DOCKERFILE
 # -- this is going to make 5050 available to the actual machine in the real world
 #
-# EXPOSE 5050
+# EXPOSE 5051
 #
 # -- IN FLASK APP
 # -- this is magic, the zeros allow you to tap into the arcane 
 # -- and let the real world find you
 #
-# app.run(host = '0.0.0.0', port=5050)
+# app.run(host = '0.0.0.0', port=5051)
 #
 # -- IN GIT BASH: PRE LAUNCH CLEANUP
 # -- If you like to test, probably need to clean up
@@ -64,15 +64,15 @@ CMD ["python", "test_ui.py"]
 #
 # -- IN GIT BASH: Start the docker magic
 # -- note the period. That's key magic
-# docker build --tag=basicbits .
+# docker build --tag=micron .
 #
 # -- note the /tcp, That's key magic
 # -- you are punching a hole through realities and wiring them up
 #
-# docker run -p 5050:5050/tcp basicbits
+# docker run -p 5051:5051/tcp micron
 #
 # -- in the real world
-# http://localhost:5050/
+# http://localhost:5051/
 #
 # Celebrate human, it used to take a team of dev ops to do what you just did
 # the future, tis wow.
