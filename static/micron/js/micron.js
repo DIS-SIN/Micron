@@ -2,7 +2,7 @@ $(function() {
 /*jq*/ 
 var micron = {
 
-    debug_mode: false,
+    debug_mode: true,
     survey_index: 0,
     question_index: 0,
     recognition_lang: "en-US",
@@ -124,10 +124,12 @@ var micron = {
 
         micron_answer_text = $("#micron_a").val();
         micron_answer_qid = $("#micron_qid").val();
+        micron_lang_code = $("#recognition_language").val();
 
         var submission_q = [{ 
             'qid': micron_answer_qid
             ,'a': micron_answer_text
+            ,'lang': micron_lang_code
         }];
         //var str_q = JSON.stringify(submission_q, null, 2);
         var str_q = submission_q;
